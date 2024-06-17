@@ -19,7 +19,7 @@ export default function Profile() {
 
   return (
     <Fragment>
-      <Card bg={"#3a3a3a"} color={"white"} mb={"15px"}>
+      <Card bg={"rgb(38, 38, 38)"} color={"white"} mb={"15px"}>
         <CardBody py={4} px={5}>
           <Text fontSize={"xl"} mb={3}>
             My Profile
@@ -51,17 +51,17 @@ export default function Profile() {
                     />
                     <Link to={`/edit-profile`}>
                       <Button color={"white"} _hover={{ bg: "#38a169", borderColor: "#38a169" }} size={"sm"} borderRadius={"full"} variant={"outline"} position={"absolute"} bottom={"-50px"} right={"0px"}>
-                        <Text fontSize={"lg"}>
-                          <FiEdit3 />
+                        <Text fontSize={"sm"}>
+                          {/* <FiEdit3 /> */} Edit profile
                         </Text>
                       </Button>
                     </Link>
                   </Box>
-                  <Text fontSize={"2xl"} mt={"40px"} fontWeight={"bold"}>
+                  <Text fontSize={"2xl"} mt={"50px"} fontWeight={"bold"}>
                     {profileData?.fullname}
                   </Text>
-                  <Text fontSize={"2xl"} mt={"40px"} fontWeight={"bold"}>
-                    @{profileData?.fullname}
+                  <Text fontSize={"sm"} mt={1} fontWeight={"bold"} color={"gray"}>
+                    @{profileData?.username}
                   </Text>
                   <Text fontSize={"md"} mt={1}>
                     {profileData?.bio}

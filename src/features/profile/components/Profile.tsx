@@ -2,14 +2,12 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { getDetailUser } from "../../../redux/user/detailUserSlice";
 import { getProfile } from "../../../redux/user/profileSlice";
 import { API } from "../../../utils/api";
-import { Alert, AlertDescription, AlertIcon, Box, Button, Card, CardBody, Flex, Image, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Box, Button, Card, CardBody, Image, Spinner, Text } from "@chakra-ui/react";
 import { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import getError from "../../../utils/GetError";
-
-// icon
-import { FiEdit3 } from "react-icons/fi";
+import ProfilePanels from "./ProfilePanels";
 
 export default function Profile() {
   const params = useParams();
@@ -19,21 +17,20 @@ export default function Profile() {
   const { data: detailUser, isLoading, isError, error } = useAppSelector((state) => state.detailUser);
   const { data: profile } = useAppSelector((state) => state.profile);
 
-  // const { data: profile_pict } = useAppSelector((state) => state.profile_pict);
-
   const [followerArray, setFollowerArray] = useState<any[]>([]);
   const [followingArray, setFollowingArray] = useState<any[]>([]);
 
   useEffect(() => {
     dispatch(getDetailUser(params.userId || ""));
-  }, [params]);
+  }, [params, dispatch]);
 
   useEffect(() => {
     const fetchFollowerData = async () => {
+      const followers = detailUser?.follower ?? [];
       const fetchedFollowerArray = await Promise.all(
-        detailUser?.follower.map(async (follower: any) => {
+        followers.map(async (follower: any) => {
           try {
-            const response = await API.get("findByUserId/" + follower.followingId, {
+            const response = await API.get(`findByUserId/${follower.followingId}`, {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,
               },
@@ -49,10 +46,11 @@ export default function Profile() {
     };
 
     const fetchFollowingData = async () => {
+      const followings = detailUser?.followwing ?? [];
       const fetchedFollowingArray = await Promise.all(
-        detailUser?.followwing.map(async (followwing) => {
+        followings.map(async (followwing: any) => {
           try {
-            const response = await API.get("findByUserId/" + followwing.followerId, {
+            const response = await API.get(`findByUserId/${followwing.followerId}`, {
               headers: {
                 Authorization: `Bearer ${jwtToken}`,
               },
@@ -75,9 +73,9 @@ export default function Profile() {
 
   const followAndUnfollow = async () => {
     try {
-      await API.post("follow/" + params.userId, "", {
+      await API.post(`follow/${params.userId}`, "", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          Authorization: `Bearer ${jwtToken}`,
         },
       });
 
@@ -118,7 +116,6 @@ export default function Profile() {
                   <>
                     <Box position={"relative"}>
                       <Image src="https://assets-global.website-files.com/5a9ee6416e90d20001b20038/635ab99b5920d1d2c6e04397_horizontal%20(66).svg" alt="Green Gradient" borderRadius={"10px"} w={"100%"} h={"80px"} objectFit={"cover"} />
-
                       <Image
                         borderRadius={"full"}
                         bgColor={"#3a3a3a"}
@@ -135,142 +132,36 @@ export default function Profile() {
                       {profile?.id === detailUser?.id && (
                         <Link to={`/edit-profile`}>
                           <Button color={"white"} _hover={{ bg: "#38a169", borderColor: "#38a169" }} size={"sm"} borderRadius={"full"} variant={"outline"} position={"absolute"} bottom={"-50px"} right={"0px"}>
-                            <Text fontSize={"lg"}>
-                              <FiEdit3 />
-                            </Text>
+                            <Text fontSize={"sm"}>{/* <FiEdit3 /> */} Edit profile</Text>
                           </Button>
                         </Link>
                       )}
                       {profile?.id !== detailUser?.id && (
-                        <>
-                          <Button color={"white"} _hover={{ bg: "#38a169", borderColor: "#38a169" }} size={"sm"} borderRadius={"full"} variant="outline" position={"absolute"} bottom={"-50px"} right={"0px"} onClick={followAndUnfollow}>
-                            {" "}
-                            {followerArray.map((follower) => follower.id).includes(profile?.id || "") ? "Unfollow" : "Follow"}
-                          </Button>
-                        </>
+                        <Button color={"white"} _hover={{ bg: "#38a169", borderColor: "#38a169" }} size={"sm"} borderRadius={"full"} variant="outline" position={"absolute"} bottom={"-50px"} right={"0px"} onClick={followAndUnfollow}>
+                          {followerArray.map((follower) => follower.id).includes(profile?.id || "") ? "Unfollow" : "Follow"}
+                        </Button>
                       )}
                     </Box>
-                    <Box mt={"75px"}>
-                      <Text fontSize={"sm"} color={"gray.400"}>
+                    <Box mt={10}>
+                      <Text fontSize={"2xl"} color={"white"} fontWeight={"bold"}>
                         {detailUser?.fullname}
                       </Text>
                       <Text fontSize={"sm"} color={"gray.400"}>
                         @{detailUser?.username}
                       </Text>
-                      <Text fontSize={"sm"} color={"gray.400"}>
+                      <Text fontSize={"lg"} color={"gray.400"}>
                         {detailUser?.bio}
                       </Text>
                     </Box>
-                    <Flex mt={"10px"} gap={3} mb={5}>
-                      <Box fontSize={"md"}>
-                        {detailUser?.follower.length}{" "}
-                        <Text display={"inline"} color={"grey.400"}>
-                          Followers
-                        </Text>
-                      </Box>
-                      <Box fontSize={"md"}>
-                        {detailUser?.followwing.length}{" "}
-                        <Text display={"inline"} color={"grey.400"}>
-                          Following
-                        </Text>
-                      </Box>
-                    </Flex>
-                    <Tabs variant="solid-rounded" colorScheme="green">
-                      <TabList>
-                        <Tab color={"white"}>Follower</Tab>
-                        <Tab color={"white"}>Following</Tab>
-                      </TabList>
-                      <TabPanels>
-                        <TabPanel>
-                          <Box bg={"#2b2b2b"} px={5} py={3}>
-                            {!detailUser?.follower.length ? (
-                              <Text fontSize={"md"}>No Follower Found</Text>
-                            ) : (
-                              <>
-                                {followerArray.map((follower, index) => (
-                                  <Flex key={index} justifyContent={"space-between"} alignItems={"center"} my={4} display={{ base: "block", sm: "flex" }}>
-                                    <Flex gap={2} alignItems={"center"} mb={{ base: 3, sm: 0 }}>
-                                      <Text>
-                                        <Image borderRadius="full" boxSize="45px" objectFit="cover" src={follower?.photo_profile} alt={follower.fullname} />
-                                      </Text>
-                                      <Box>
-                                        <Text fontSize={"sm"}>{follower.fullname}</Text>
-                                        <Text fontSize={"sm"} color={"gray.400"}>
-                                          @{follower.username}
-                                        </Text>
-                                      </Box>
-                                    </Flex>
-                                    <Text>
-                                      <Link to={`/profile/${follower.id}`}>
-                                        <Button
-                                          color={"white"}
-                                          _hover={{
-                                            bg: "#38a169",
-                                            borderColor: "#38a169",
-                                          }}
-                                          size="sm"
-                                          borderRadius={"full"}
-                                          variant="outline"
-                                        >
-                                          Visit Profile
-                                        </Button>
-                                      </Link>
-                                    </Text>
-                                  </Flex>
-                                ))}
-                              </>
-                            )}
-                          </Box>
-                        </TabPanel>
-                        <TabPanel>
-                          <Box bg={"#2b2b2b"} px={5} py={3}>
-                            {detailUser?.follower.length ? (
-                              <Text fontSize={"md"}>No Following Found</Text>
-                            ) : (
-                              <>
-                                {followingArray.map((followwing, index) => (
-                                  <Flex key={index} justifyContent={"space-between"} alignItems={"center"} my={4} display={{ base: "block", sm: "flex" }}>
-                                    <Flex gap={2} alignItems={"center"} mb={{ base: 3, sm: 0 }}>
-                                      <Text>
-                                        <Image borderRadius="full" boxSize="45px" objectFit="cover" src={followwing.photo_profile} alt={followwing.fullname} />
-                                      </Text>
-                                      <Box>
-                                        <Text fontSize={"sm"}>{followwing.fullname}</Text>
-                                        <Text fontSize={"sm"} color={"gray.400"}>
-                                          @{followwing.username}
-                                        </Text>
-                                      </Box>
-                                    </Flex>
-                                    <Text>
-                                      <Link to={`/profile/${followwing.id}`}>
-                                        <Button
-                                          color={"white"}
-                                          _hover={{
-                                            bg: "#38a169",
-                                            borderColor: "#38a169",
-                                          }}
-                                          size="sm"
-                                          borderRadius={"full"}
-                                          variant="outline"
-                                        >
-                                          Visit Profile
-                                        </Button>
-                                      </Link>
-                                    </Text>
-                                  </Flex>
-                                ))}
-                              </>
-                            )}
-                          </Box>
-                        </TabPanel>
-                      </TabPanels>
-                    </Tabs>
                   </>
                 )}
               </>
             )}
           </CardBody>
         </Card>
+        <Box>
+          <ProfilePanels/>
+        </Box>
       </Box>
     </Fragment>
   );

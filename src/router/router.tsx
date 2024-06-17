@@ -1,7 +1,5 @@
-import { useEffect, useState, ReactNode } from "react";
-import { API } from "../utils/api";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Flex, Spinner } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "../layout/Main";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
@@ -10,9 +8,10 @@ import SearchPage from "../pages/SearchPage";
 import ProfilePage from "../pages/ProfilePage";
 import EditProfilePage from "../pages/EditProfilePage";
 import ReplyPage from "../pages/ReplyPage";
-import { useAppDispatch, useAppSelector } from "../redux/store";
+import { useAppDispatch } from "../redux/store";
 import { authCheckAsync } from "../redux/auth";
 import Auth from "../layout/Auth";
+import { FollowPage } from "../features/followPage/components/follow";
 
 function Router() {
   const [checkAuthFinish, setCheckAuthFinish] = useState<boolean>(true);
@@ -32,19 +31,11 @@ function Router() {
   }
 
   useEffect(() => {
-    // Jika user melakukan login, akan mengecek apakah jwt token ada
-    // jika ada akan menjalankan fungsi check
-    // jika tidak ada maka setCheckFinish menjadi false
     authCheck();
   }, []);
 
   return (
     <>
-      {/* {checkAuthFinish && (
-        <Flex justifyContent={"center"} alignItems={"center"} h={"100vh"} w={"100vh"}>
-          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" w={"70px"} h={"70px"} />
-        </Flex>
-      )} */}
       {!checkAuthFinish && (
         <BrowserRouter>
           <Routes>
@@ -80,6 +71,18 @@ function Router() {
                   <>
                     <Main>
                       <SearchPage />
+                    </Main>
+                  </>
+                }
+              />
+            </Route>
+            <Route path="/follow/:userId">
+              <Route
+                index
+                element={
+                  <>
+                    <Main>
+                      <FollowPage />
                     </Main>
                   </>
                 }

@@ -2,6 +2,7 @@ import { useState, ChangeEvent } from "react";
 import getError from "../../../utils/GetError";
 import { API } from "../../../utils/api";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export function useRegister() {
   const [form, setForm] = useState<Register>({
@@ -9,11 +10,11 @@ export function useRegister() {
     email: "",
     password: "",
   });
-  //menangani penginputan backend ke frontend
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [Error, setError] = useState<string>("");
   const [isRegisterSuccess, setRegisterSuccess] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setForm({
@@ -44,7 +45,8 @@ export function useRegister() {
       setError(getError(error));
     } finally {
       setIsLoading(false);
-      window.setTimeout(() => location.reload(), 5000);
+      window.setTimeout(() => 3000);
+      navigate("/login");
     }
   }
   return {

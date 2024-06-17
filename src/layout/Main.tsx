@@ -14,8 +14,10 @@ export default function Main({ children }: { children: ReactNode }) {
   const auth = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   useEffect(() => {
-    if (auth.isLogin) {
+    if (auth.isLogin == true) {
       return navigate("/");
+    } else {
+      navigate("/login");
     }
   }, []);
 

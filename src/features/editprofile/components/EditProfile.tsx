@@ -33,13 +33,13 @@ export default function EditProfile() {
               </Alert>
             )}
             <FormControl mb={"20px"}>
-              <Input type="file" placeholder="Type Fullname" bg={"#f8f9fb"} color={"black"} border={"none"} name="photo_profile" onChange={handleChange} value={form.photo_profile} p={1} />
+              <Input type="file" placeholder="Type Fullname" bg={"#f8f9fb"} color={"black"} border={"none"} name="photo_profile" onChange={handleChange} p={1} />
             </FormControl>
             <FormControl mb={"20px"}>
               <Input type="fullname" placeholder="Type Fullname" bg={"#f8f9fb"} color={"black"} border={"none"} name="fullname" onChange={handleChange} value={form.fullname} />
             </FormControl>
             <FormControl mb={"20px"}>
-              <Input type="password" placeholder="Type Password" bg={"#f8f9fb"} color={"black"} border={"none"} name="password" onChange={handleChange} value={form.password} />
+              <Input type="username" placeholder="Type Username" bg={"#f8f9fb"} color={"black"} border={"none"} name="username" onChange={handleChange} value={form.username} />
             </FormControl>
             <FormControl mb={"20px"}>
               <Input type="bio" placeholder="Type Bio" bg={"#f8f9fb"} color={"black"} border={"none"} name="bio" onChange={handleChange} value={form.bio} />

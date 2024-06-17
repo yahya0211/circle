@@ -21,19 +21,7 @@ export default function Thread() {
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const handleNext = (lenImage: number) => {
-    return (event: React.MouseEvent<HTMLButtonElement>) => {
-      setCurrentImageIndex((prevIndex: number) => (prevIndex + 1) % lenImage);
-    };
-  };
-
-  const handlePrev = (lenImage: number) => {
-    return (event: React.MouseEvent<HTMLButtonElement>) => {
-      setCurrentImageIndex((prevIndex: number) => (prevIndex - 1 + lenImage) % lenImage);
-    };
-  };
+  
 
   useEffect(() => {
     refetch();

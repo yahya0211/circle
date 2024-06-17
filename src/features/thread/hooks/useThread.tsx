@@ -14,6 +14,17 @@ const fetchInfinityThreads = async ({ pageParam = 1 }) => {
   return response.data;
 };
 
+ export const fetchThreadUser = async (userId: string) => {
+  const response = await API.get(`findByUserId/${userId}`, {
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
+  });
+
+  return response.data;
+};
+
+
 export const useInfinityThreads = () => {
   return useInfiniteQuery({
     queryKey: ["threads-infinity"],

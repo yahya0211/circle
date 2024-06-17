@@ -20,7 +20,6 @@ const initialState: initialStateT = {
 export const getSuggested = createAsyncThunk("suggested", async (_, { rejectWithValue }) => {
   try {
     const token = localStorage.getItem("jwtToken");
-    // console.log("Token Sugested:", token);
 
     const response = await API.get("getSuggested", {
       headers: {

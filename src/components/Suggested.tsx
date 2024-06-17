@@ -14,7 +14,7 @@ export default function Suggested() {
 
   return (
     <Fragment>
-      <Card bg={"#3a3a3a"} color={"white"} mb={"15px"}>
+      <Card bg={"rgb(38, 38, 38)"} color={"white"} mb={"15px"}>
         <CardBody py={4} px={5}>
           <Text fontSize={"xl"} mb={3}>
             Suggested For You

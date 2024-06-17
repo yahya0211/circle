@@ -31,6 +31,7 @@ export default function Search() {
     if (nameQuery) {
       url += `&search=${nameQuery}`;
     }
+    
 
     navigate(url);
   };
@@ -46,7 +47,7 @@ export default function Search() {
             <InputLeftElement pointerEvents={"none"} fontSize={"20px"}>
               <MdPersonSearch />
             </InputLeftElement>
-            <Input type="text" placeholder="fullname" borderRadius={"full"} value={nameQuery} onChange={(e) => setNameQuery(e.target.value)} />
+            <Input type="text" placeholder="username" borderRadius={"full"} value={nameQuery} onChange={(e) => setNameQuery(e.target.value)} />
           </InputGroup>
           <Button colorScheme="green" borderRadius={"full"} onClick={() => applyFilter()}>
             <FaSearchPlus />
