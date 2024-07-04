@@ -1,0 +1,13 @@
+account
+
+{
+    "fullname": "Yahya",
+    "email" : "yahya@gmail.com",
+    "password": "root@123"
+}
+
+{
+    "fullname": "root",
+    "email" : "root@gmail.com",
+    "password": "root@123"
+}

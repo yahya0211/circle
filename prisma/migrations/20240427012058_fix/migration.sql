@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "Reply" ADD COLUMN     "images" TEXT[],
+ALTER COLUMN "image" SET NOT NULL,
+ALTER COLUMN "image" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Thread" ADD COLUMN     "images" TEXT[],
+ALTER COLUMN "image" SET NOT NULL,
+ALTER COLUMN "image" SET DATA TYPE TEXT;
