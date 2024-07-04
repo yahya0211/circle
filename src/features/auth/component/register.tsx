@@ -23,7 +23,6 @@ export default function Register() {
           <Text fontSize={"xl"} mb={3}>
             Create Account Circle
           </Text>
-          {/* //pemanggilan useState */}
           {isError && (
             <Alert status="error" bg={"#FF6969"} mb={3} borderRadius={5}>
               <AlertIcon color={"white"} />

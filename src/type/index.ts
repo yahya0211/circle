@@ -107,7 +107,7 @@ interface ThreadLikeType {
 interface ThreadReplyType {
   id: string;
   content: string;
-  images: string[];
+  image: string;
   created_at: string;
   updated_at: string;
   user: {

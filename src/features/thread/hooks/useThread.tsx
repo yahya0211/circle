@@ -14,7 +14,7 @@ const fetchInfinityThreads = async ({ pageParam = 1 }) => {
   return response.data;
 };
 
- export const fetchThreadUser = async (userId: string) => {
+export const fetchThreadUser = async (userId: string) => {
   const response = await API.get(`findByUserId/${userId}`, {
     headers: {
       Authorization: `Bearer ${jwtToken}`,
@@ -23,7 +23,6 @@ const fetchInfinityThreads = async ({ pageParam = 1 }) => {
 
   return response.data;
 };
-
 
 export const useInfinityThreads = () => {
   return useInfiniteQuery({
@@ -38,6 +37,7 @@ export const useInfinityThreads = () => {
     },
     initialPageParam: 1,
     enabled: true,
+
   });
 };
 

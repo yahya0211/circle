@@ -98,6 +98,7 @@ export default function Sidebar() {
                     dispatch(LOGOUT());
                     localStorage.removeItem("jwtToken");
                     navigate("/login");
+                    window.location.reload();
                   }
                 });
               }}

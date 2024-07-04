@@ -2,13 +2,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-export interface IFormInput {
+export interface IFormLogin {
   email: string;
   password: string;
 }
 
 export const useLoginValidation = () => {
-  const initialValue: IFormInput = {
+  const initialValue: IFormLogin = {
     email: "",
     password: "",
   };
@@ -18,7 +18,7 @@ export const useLoginValidation = () => {
     password: yup.string().required("Password tidak boleh kosong"),
   });
 
-  return useForm<IFormInput>({
+  return useForm<IFormLogin>({
     defaultValues: initialValue,
     resolver: yupResolver(schema),
     mode: "all",

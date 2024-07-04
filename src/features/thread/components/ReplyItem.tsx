@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { Box, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Image, Modal, ModalBody, ModalContent, Text, useDisclosure } from "@chakra-ui/react";
 
 interface ReplyItemInterface {
   reply: ThreadReplyType;
@@ -31,18 +31,22 @@ export default function ReplyItem({ reply }: ReplyItemInterface) {
           <Text fontSize={"sm"} wordBreak={"break-word"}>
             {reply?.content}
           </Text>
-          <Image
-            onClick={() => {
-              onOpen();
-            }}
-            mt={"10px"}
-            borderRadius="5px"
-            boxSize="350px"
-            objectFit="cover"
-            src={reply?.image}
-            alt={`${reply?.image} Reply Image`}
-            cursor={"pointer"}
-          />
+          {reply.image ? (
+            <Image
+              onClick={() => {
+                onOpen();
+              }}
+              mt={"10px"}
+              borderRadius="5px"
+              boxSize="350px"
+              objectFit="cover"
+              src={reply?.image}
+              alt={`{reply?.image} Reply Image`}
+              cursor={"pointer"}
+            />
+          ) : (
+            ""
+          )}
         </Box>
       </Flex>
 

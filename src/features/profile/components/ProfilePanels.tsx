@@ -1,5 +1,5 @@
 import { Box, Flex, Grid, GridItem, Image, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { getDetailUser } from "../../../redux/user/detailUserSlice";
@@ -62,6 +62,8 @@ const ProfilePanels = () => {
       fetchThreads();
     }
   }, [userId, dispatch]);
+
+  console.log("isi thread:", threads);
 
   return (
     <Tabs>

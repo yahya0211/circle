@@ -160,7 +160,7 @@ export default function Profile() {
           </CardBody>
         </Card>
         <Box>
-          <ProfilePanels/>
+          <ProfilePanels />
         </Box>
       </Box>
     </Fragment>

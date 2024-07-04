@@ -1,14 +1,14 @@
-import { Fragment, useEffect, useRef, useState } from "react";
-import { Alert, AlertDescription, AlertIcon, Box, Button, Flex, Spinner, Text, Image, Stack } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Box, Button, Flex, Image, Spinner, Stack, Text } from "@chakra-ui/react";
 import moment from "moment";
-import Swal from "sweetalert2";
+import { Fragment, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useAppSelector } from "../../../redux/store";
 
 //icons
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useDeleteThread, useInfinityThreads, usePostLike } from "../hooks/useThread";
 import ThreadFrom from "./ThreadForm";
 
@@ -20,8 +20,6 @@ export default function Thread() {
   const { data: profileData } = useAppSelector((state) => state.profile);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
-
-  
 
   useEffect(() => {
     refetch();

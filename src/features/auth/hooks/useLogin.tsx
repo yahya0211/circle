@@ -4,10 +4,10 @@ import { useAppDispatch } from "../../../redux/store";
 import { loginAsync } from "../../../redux/auth";
 import { useNavigate } from "react-router-dom";
 import getError from "../../../utils/GetError";
-import { IFormInput } from "../../../lib/loginValidation"; // Ensure this interface matches your form data structure
+import { IFormLogin } from "../../../lib/loginValidation"; // Ensure this interface matches your form data structure
 
 export function useLogin() {
-  const [form, setForm] = useState<IFormInput>({
+  const [form, setForm] = useState<IFormLogin>({
     email: "",
     password: "",
   });
@@ -43,6 +43,7 @@ export function useLogin() {
       });
       setIsLoginSuccess(true);
       navigate("/");
+      window.location.reload();
     } catch (err: any) {
       setIsError(true);
       setError(getError(err));

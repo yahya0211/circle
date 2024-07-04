@@ -12,6 +12,7 @@ export default function Reply() {
 
   const { isLoading, data: thread, isError, error } = useDetailThread(params.threadId || "");
 
+
   return (
     <Fragment>
       <Box flex={1} px={5} py={10} overflow={"auto"} className="hide-scroll">
@@ -54,7 +55,7 @@ export default function Reply() {
                       </Box>
                     </Flex>
                     <Text fontSize={"sm"} mb={"10px"} wordBreak={"break-word"}>
-                      {thread?.data?.image && <Image borderRadius="5px" boxSize="550px" objectFit="cover" src={thread.data.image} alt={`${thread.data.image} Thread Image`} mb={"10px"} />}
+                      {thread?.data?.images ? <Image borderRadius="5px" boxSize="550px" objectFit="cover" src={thread.data.images} alt={`${thread.data.images} Thread Image`} mb={"10px"} /> : ""}
                     </Text>
                   </Box>
                 </>

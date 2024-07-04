@@ -2,14 +2,16 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { API } from "../../../utils/api";
 import { toast } from "react-toastify";
 import getError from "../../../utils/GetError";
-import { useAppSelector } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { useNavigate } from "react-router-dom";
+import { getProfile } from "../../../redux/user/profileSlice";
 
 // Define the type to handle both string (URL) and File
 interface EditProfileType {
   fullname: string;
   username: string;
   bio: string;
-  image: string | File | null;
+  photo_profile: string | File | null;
 }
 
 export function useEditProfile() {
@@ -18,9 +20,9 @@ export function useEditProfile() {
     fullname: "",
     username: "",
     bio: "",
-    image: null,
+    photo_profile: null,
   });
-
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -32,7 +34,7 @@ export function useEditProfile() {
         fullname: "",
         username: "",
         bio: "",
-        image: null,
+        photo_profile: null,
       });
     }
   }, [profile]);
@@ -40,7 +42,7 @@ export function useEditProfile() {
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value, files } = event.target;
 
-    if (name === "image" && files && files[0]) {
+    if (name === "photo_profile" && files && files[0]) {
       setForm({
         ...form,
         [name]: files[0],
@@ -77,10 +79,10 @@ export function useEditProfile() {
       formData.append("fullname", form.fullname);
       formData.append("username", form.username);
       formData.append("bio", form.bio);
-      if (form.image instanceof File) {
-        formData.append("image", form.image);
-      } else if (typeof form.image === "string") {
-        formData.append("photo_profile", form.image);
+      if (form.photo_profile instanceof File) {
+        formData.append("image", form.photo_profile);
+      } else if (typeof form.photo_profile === "string") {
+        formData.append("photo_profile", form.photo_profile);
       }
 
       const response = await API.put(`editProfile/${idUser}`, formData, {
@@ -89,6 +91,8 @@ export function useEditProfile() {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      dispatch(getProfile());
 
       toast.success(response.data.message, {
         position: "top-center",
